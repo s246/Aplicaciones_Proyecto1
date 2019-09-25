@@ -19,6 +19,11 @@ public class DataBaseBean implements Serializable {
 
     public DataBaseBean(){
         System.out.println("CONSRUCTOOOOOR");
+        UserBean User_prueba=new UserBean("AaRON55","123", "Aaron", "Salazar");
+        UserBean User_prueba2= new UserBean("Sebas246", "123", "Sebastian", "Gutierrez");
+
+        registeredUsers.put(User_prueba.getUserName(),User_prueba);
+        registeredUsers.put(User_prueba2.getUserName(),User_prueba2);
     }
 
     public Map<String, UserBean> getRegisteredUsers() {
@@ -48,12 +53,18 @@ public class DataBaseBean implements Serializable {
     public String registerUser(UserBean newUser){
         System.out.println(newUser.getUserName());
 
+       UserBean existingUser= getRegisteredUsers().get(newUser.getUserName());
 
-       UserBean user= getRegisteredUsers().get(newUser.getUserName());
-        if(user!=null || (user.getName().isEmpty()|| user.getPassword().isEmpty() || user.getUserName().isEmpty())){
+        if(existingUser!=null){
+            System.out.println("EXISTING");
             return "failed";
         }
 
+        else{
+            System.out.println("NO HAY PUEDE REgistrarse");
+            registeredUsers.put(newUser.getUserName(),newUser);
+            System.out.println("NO HAY PUEDE REgistrarse");
+        }
         return "success";
     }
 }

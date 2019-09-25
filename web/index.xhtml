@@ -28,6 +28,10 @@
          </h:commandButton></p>
 
          <h3><h:outputText id="out" value="#{user.name}"/></h3>
+
+         <h:selectOneListbox value="#{user.userName}">
+            <f:selectItems value="#{dataBase.registeredUsers.keySet}"/>
+         </h:selectOneListbox>
       </h:form>
    </h:body>
 </html>

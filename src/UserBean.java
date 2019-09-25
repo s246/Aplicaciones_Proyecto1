@@ -15,6 +15,17 @@ public class UserBean implements Serializable {
     private String name = "";
     private String lastName = "";
 
+    public UserBean(){
+
+    }
+
+    public UserBean(String userName, String password, String name, String lastName) {
+        this.userName = userName;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
     public String getUserName() {
         return userName;
     }
