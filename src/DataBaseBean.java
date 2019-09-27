@@ -90,8 +90,9 @@ public class DataBaseBean implements Serializable {
         FacesContext facesContext=FacesContext.getCurrentInstance();
         Map<String,String> parametros=facesContext.getExternalContext().getRequestParameterMap();
 
-        String userName=parametros.get("userNameParam");
-        String userPass=parametros.get("userNamePasswordParam");
+
+        String userName=parametros.get("userName");
+        String userPass=parametros.get("password");
 
         System.out.println("IMPRIMIO");
         System.out.println(userName);
@@ -104,7 +105,7 @@ public class DataBaseBean implements Serializable {
 
         else{
             String rightPass=user.getPassword();
-            if(rightPass==userPass)
+            if(rightPass.equals(userPass))
                 return "success";
             else
                 return "failure";

@@ -21,14 +21,10 @@
             </tr>
          </table>
          <p><h:commandButton value="Login" action="#{dataBase.validateUser}">
-            <f:param id="uName" name="userNameParam" value="#{user.userName}"/>
-            <f:param id="uPass" name="userNamePasswordParam" value="#{user.password}"/>
          </h:commandButton></p>
 
          <p><h:commandButton value="Register" action="register">
          </h:commandButton></p>
-
-         <h3><h:outputText id="out" value="#{user.name}"/></h3>
 
          <h:selectOneListbox value="#{user.userName}">
             <f:selectItems value="#{dataBase.registeredUsers.keySet}"/>
