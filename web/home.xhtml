@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+   <h:head>
+      <title>Home</title>
+   </h:head>
+   <h:body>   
+      <h:form prependId="false">
+
+         <h3>#{mess.bienvenida}
+         <f:param value="#{user.name}"/>
+         <f:param value="#{user.lastName}"/>
+         </h3>
+
+         <table>
+            <tr>
+               <td>Name:</td>
+               <td><h:inputText value="#{user.userName}" id="name"/></td>
+            </tr>
+            <tr>
+               <td>Password:</td>
+               <td><h:inputSecret value="#{user.password}" id="password"/></td>
+            </tr>
+         </table>
+         <p><h:commandButton value="Login">
+            <f:ajax execute="name password" render="out"/>
+         </h:commandButton></p>
+
+         <p><h:commandButton value="Register" action="register">
+         </h:commandButton></p>
+
+         <h3><h:outputText id="out" value="#{user.name}"/></h3>
+
+         <h:selectOneListbox value="#{user.userName}">
+            <f:selectItems value="#{dataBase.registeredUsers.keySet}"/>
+         </h:selectOneListbox>
+      </h:form>
+   </h:body>
+</html>
