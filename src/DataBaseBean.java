@@ -1,8 +1,10 @@
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Singleton;
@@ -15,6 +17,7 @@ public class DataBaseBean implements Serializable {
 
     private Map<String, UserBean> registeredUsers = new HashMap<String, UserBean>();
     private ArrayList<String> onlineUsers = new ArrayList<String>();
+    private ArrayList<String> offlineUsers = new ArrayList<String>();
     private ArrayList<Message> messagesToShow = new ArrayList<Message>();
 
     public DataBaseBean() {
@@ -31,16 +34,21 @@ public class DataBaseBean implements Serializable {
 
     }
 
-    public ArrayList<String> getoffLineUsers(){
-        
-        ArrayList<String> offline=new ArrayList<String>();
+    public ArrayList<String> getOfflineUsers() {
+        offlineUsers.clear();
         for (String key: registeredUsers.keySet()){
             if(!onlineUsers.contains(key)){
-                offline.add(key);
+                offlineUsers.add(key);
             }
         }
-        return offline;
+        System.out.println(offlineUsers);
+        return offlineUsers;
     }
+
+    public void setOfflineUsers(ArrayList<String> offlineUsers) {
+        this.offlineUsers = offlineUsers;
+    }
+
 
     public void setRegisteredUsers(Map<String, UserBean> registeredUsers) {
         this.registeredUsers = registeredUsers;
@@ -78,5 +86,31 @@ public class DataBaseBean implements Serializable {
         return "success";
     }
 
+    public String validateUser(){
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        Map<String,String> parametros=facesContext.getExternalContext().getRequestParameterMap();
+
+        String userName=parametros.get("userNameParam");
+        String userPass=parametros.get("userNamePasswordParam");
+
+        System.out.println("IMPRIMIO");
+        System.out.println(userName);
+
+        UserBean user=registeredUsers.get(userName);
+
+        if (user==null){
+            return "failure";
+        }
+
+        else{
+            String rightPass=user.getPassword();
+            if(rightPass==userPass)
+                return "success";
+            else
+                return "failure";
+        }
+
+
+    }
 
 }

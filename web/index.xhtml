@@ -12,16 +12,17 @@
          <h3>Please enter your name and password.</h3>
          <table>
             <tr>
-               <td>Name:</td>
-               <td><h:inputText value="#{user.userName}" id="name"/></td>
-            </tr>
+               <td>UserName:</td>
+               <td><h:inputText value="#{user.userName}" id="userName"/></td>
+             </tr>
             <tr>
                <td>Password:</td>
                <td><h:inputSecret value="#{user.password}" id="password"/></td>
             </tr>
          </table>
-         <p><h:commandButton value="Login">
-            <f:ajax execute="name password" render="out"/>
+         <p><h:commandButton value="Login" action="#{dataBase.validateUser}">
+            <f:param id="uName" name="userNameParam" value="#{user.userName}"/>
+            <f:param id="uPass" name="userNamePasswordParam" value="#{user.password}"/>
          </h:commandButton></p>
 
          <p><h:commandButton value="Register" action="register">

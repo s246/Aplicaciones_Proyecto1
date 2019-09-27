@@ -9,5 +9,20 @@
         <var>mess</var>
     </resource-bundle>
     </application>
+
+    <navigation-rule>
+        <from-view-id>../index.xhtml</from-view-id>
+        <navigation-case>
+            <from-action >#{dataBase.validateUser}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>../home.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-action >#{dataBase.validateUser}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>../index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   
 </faces-config>

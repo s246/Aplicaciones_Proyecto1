@@ -20,25 +20,30 @@
          <table>
 
             <tr>
-               <td>Usuarios Conectados:</td>
+               <td>Usuarios Desconectados:</td>
                <td>
                   <h:selectOneListbox value="#{user.userName}">
-                     <f:selectItems value="#{dataBase.test}"/>
+                     <f:selectItems value="#{dataBase.offlineUsers}"/>
                   </h:selectOneListbox>
                </td>
             </tr>
 
             <tr>
-
-               <td>Password:</td>
-               <td><h:inputSecret value="#{user.password}" id="password"/></td>
+               <td>Usuarios Conectados:</td>
+               <td>
+                  <h:selectOneListbox value="#{user.userName}">
+                     <f:selectItems value="#{dataBase.onlineUsers}"/>
+                  </h:selectOneListbox>
+               </td>
             </tr>
+
+
          </table>
-         <p><h:commandButton value="Login">
+         <p><h:commandButton value="Logout">
             <f:ajax execute="name password" render="out"/>
          </h:commandButton></p>
 
-         <p><h:commandButton value="Register" action="register">
+         <p><h:commandButton value="Show Messages" action="register">
          </h:commandButton></p>
 
          <h3><h:outputText id="out" value="#{user.name}"/></h3>
