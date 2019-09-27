@@ -7,20 +7,29 @@
    <h:head>
       <title>Home</title>
    </h:head>
-   <h:body>   
+
+   <h:body>
+
       <h:form prependId="false">
 
-         <h3>#{mess.bienvenida}
-         <f:param value="#{user.name}"/>
-         <f:param value="#{user.lastName}"/>
-         </h3>
+         <h:outputFormat value="#{mess.bienvenida}">
+          <f:param value="#{user.name}"/>
+          <f:param value="#{user.lastName}"/>
+         </h:outputFormat>
 
          <table>
+
             <tr>
-               <td>Name:</td>
-               <td><h:inputText value="#{user.userName}" id="name"/></td>
+               <td>Usuarios Conectados:</td>
+               <td>
+                  <h:selectOneListbox value="#{user.userName}">
+                     <f:selectItems value="#{dataBase.test}"/>
+                  </h:selectOneListbox>
+               </td>
             </tr>
+
             <tr>
+
                <td>Password:</td>
                <td><h:inputSecret value="#{user.password}" id="password"/></td>
             </tr>
@@ -33,10 +42,6 @@
          </h:commandButton></p>
 
          <h3><h:outputText id="out" value="#{user.name}"/></h3>
-
-         <h:selectOneListbox value="#{user.userName}">
-            <f:selectItems value="#{dataBase.registeredUsers.keySet}"/>
-         </h:selectOneListbox>
       </h:form>
    </h:body>
 </html>

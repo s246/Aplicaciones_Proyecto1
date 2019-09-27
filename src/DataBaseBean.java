@@ -14,20 +14,32 @@ import javax.inject.Singleton;
 public class DataBaseBean implements Serializable {
 
     private Map<String, UserBean> registeredUsers = new HashMap<String, UserBean>();
-    private ArrayList<String> onlineUsers= new ArrayList<String>();
+    private ArrayList<String> onlineUsers = new ArrayList<String>();
     private ArrayList<Message> messagesToShow = new ArrayList<Message>();
 
-    public DataBaseBean(){
+    public DataBaseBean() {
         System.out.println("CONSRUCTOOOOOR");
-        UserBean User_prueba=new UserBean("AaRON55","123", "Aaron", "Salazar");
-        UserBean User_prueba2= new UserBean("Sebas246", "123", "Sebastian", "Gutierrez");
+        UserBean User_prueba = new UserBean("AaRON55", "123", "Aaron", "Salazar");
+        UserBean User_prueba2 = new UserBean("Sebas246", "123", "Sebastian", "Gutierrez");
 
-        registeredUsers.put(User_prueba.getUserName(),User_prueba);
-        registeredUsers.put(User_prueba2.getUserName(),User_prueba2);
+        registeredUsers.put(User_prueba.getUserName(), User_prueba);
+        registeredUsers.put(User_prueba2.getUserName(), User_prueba2);
     }
 
     public Map<String, UserBean> getRegisteredUsers() {
         return registeredUsers;
+
+    }
+
+    public ArrayList<String> getoffLineUsers(){
+        
+        ArrayList<String> offline=new ArrayList<String>();
+        for (String key: registeredUsers.keySet()){
+            if(!onlineUsers.contains(key)){
+                offline.add(key);
+            }
+        }
+        return offline;
     }
 
     public void setRegisteredUsers(Map<String, UserBean> registeredUsers) {
@@ -50,21 +62,21 @@ public class DataBaseBean implements Serializable {
         this.messagesToShow = messagesToShow;
     }
 
-    public String registerUser(UserBean newUser){
+    public String registerUser(UserBean newUser) {
         System.out.println(newUser.getUserName());
 
-       UserBean existingUser= getRegisteredUsers().get(newUser.getUserName());
+        UserBean existingUser = getRegisteredUsers().get(newUser.getUserName());
 
-        if(existingUser!=null){
+        if (existingUser != null) {
             System.out.println("EXISTING");
             return "failed";
-        }
-
-        else{
+        } else {
             System.out.println("NO HAY PUEDE REgistrarse");
-            registeredUsers.put(newUser.getUserName(),newUser);
+            registeredUsers.put(newUser.getUserName(), newUser);
             System.out.println("NO HAY PUEDE REgistrarse");
         }
         return "success";
     }
+
+
 }
