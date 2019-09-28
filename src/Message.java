@@ -4,12 +4,13 @@ public class Message {
     private String content;
     private UserBean destinatario;
     private UserBean remitente;
-    private Date fecha;
+    private String fecha;
 
-    public Message(String content, UserBean destinatario, UserBean remitente, Date fecha){
+    public Message(String content, UserBean destinatario, UserBean remitente, String fecha){
         this.content=content;
         this.destinatario=destinatario;
         this.fecha=fecha;
+        this.remitente=remitente;
     }
 
 
@@ -37,11 +38,11 @@ public class Message {
         this.remitente = remitente;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 }
