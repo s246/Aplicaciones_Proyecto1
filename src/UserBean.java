@@ -10,10 +10,12 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 
 public class UserBean implements Serializable {
-    private String userName = "";
+    private String userName = "PRUEBA";
     private String password;
     private String name = "";
     private String lastName = "";
+    private Message message=new Message();
+    private String idToEliminate="0";
 
     public UserBean(){
 
@@ -24,6 +26,22 @@ public class UserBean implements Serializable {
         this.password = password;
         this.name = name;
         this.lastName = lastName;
+    }
+
+    public String getIdToEliminate() {
+        return idToEliminate;
+    }
+
+    public void setIdToEliminate(String idToEliminate) {
+        this.idToEliminate=idToEliminate;
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 
     public String getUserName() {
@@ -40,11 +58,6 @@ public class UserBean implements Serializable {
 
     public void setPassword(String newValue) {
         password = newValue;
-    }
-
-    public String getGreeting() {
-        if (userName.length() == 0) return "";
-        else return "Welcome to JSF2 + Ajax, " + userName + "!";
     }
 
     public String getName() {

@@ -19,17 +19,19 @@ public class DataBaseBean implements Serializable {
     private Map<String, UserBean> registeredUsers = new HashMap<String, UserBean>();
     private ArrayList<String> onlineUsers = new ArrayList<String>();
     private ArrayList<String> offlineUsers = new ArrayList<String>();
+    private ArrayList<String> allUsers = new ArrayList<String>();
     private ArrayList<Message> messagesToShow = new ArrayList<Message>();
     private ArrayList<Message> total_messages = new ArrayList<Message>();
+    private int idCounter=0;
 
     public DataBaseBean() {
-        System.out.println("CONSRUCTOOOOOR");
-        UserBean User_prueba = new UserBean("AaRON55", "123", "Aaron", "Salazar");
+        System.out.println("CONSRUCTOOOOOR DATABASE BEAN");
+        UserBean User_prueba = new UserBean("Aaron", "123", "Aaron", "Salazar");
         UserBean User_prueba2 = new UserBean("Sebas246", "123", "Sebastian", "Gutierrez");
 
         registeredUsers.put(User_prueba.getUserName(), User_prueba);
         registeredUsers.put(User_prueba2.getUserName(), User_prueba2);
-        total_messages.add(new Message("HOLAAA",User_prueba2, User_prueba,"hoy"));
+        total_messages.add(new Message(5,"HOLAAA",User_prueba2.getUserName(), User_prueba.getUserName(),"hoy"));
     }
 
     public Map<String, UserBean> getRegisteredUsers() {
@@ -53,8 +55,16 @@ public class DataBaseBean implements Serializable {
                 offlineUsers.add(key);
             }
         }
-        System.out.println(offlineUsers);
         return offlineUsers;
+    }
+
+    public ArrayList<String> getAllUsers() {
+        allUsers.clear();
+        for (String key: registeredUsers.keySet()){
+            allUsers.add(key);
+        }
+        // System.out.println(offlineUsers);
+        return allUsers;
     }
 
     public void setOfflineUsers(ArrayList<String> offlineUsers) {
@@ -83,24 +93,40 @@ public class DataBaseBean implements Serializable {
     }
 
 
-    public void obtainMessages(){
+    public void obtainMessages(UserBean actualUser){
+
         messagesToShow.clear();
 
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        Map<String,String> parametros=facesContext.getExternalContext().getRequestParameterMap();
-
-        String userName=parametros.get("userName");
-        System.out.println(userName);
+        String actualUsername= actualUser.getUserName();
 
         for(Message message: total_messages){
-            if(message.getDestinatario().equals(userName)){
+            if(message.getDestinatario().equals(actualUsername)){
                 messagesToShow.add(message);
                 System.out.println(message.getContent());
             }
         }
-        System.out.println(messagesToShow);
 
     }
+
+    public void addMessageTosend(UserBean actualUser){
+        System.out.println("EL DESTINATARIO ES");
+        System.out.println(actualUser.getMessage().getDestinatario());
+        total_messages.add(new Message(idCounter,actualUser.getMessage().getContent(),actualUser.getMessage().getDestinatario(),actualUser.getUserName(),"hoy"));
+        idCounter++;
+        System.out.println(total_messages.toString());
+    }
+
+
+    public void eliminateMessage(UserBean actualUser){
+        System.out.println(actualUser.getIdToEliminate());
+        int id=Integer.parseInt(actualUser.getIdToEliminate().substring(actualUser.getIdToEliminate().indexOf(":")+1,actualUser.getIdToEliminate().indexOf("-")));
+        for (Message mensaje : messagesToShow){
+            if(mensaje.getId()==id)
+                total_messages.remove(mensaje);
+        }
+    }
+
+
     public String registerUser() {
 
         FacesContext facesContext=FacesContext.getCurrentInstance();
@@ -129,8 +155,8 @@ public class DataBaseBean implements Serializable {
         FacesContext facesContext=FacesContext.getCurrentInstance();
         Map<String,String> parametros=facesContext.getExternalContext().getRequestParameterMap();
 
-        String userName=parametros.get("userName");
-        String userPass=parametros.get("password");
+        String userName=parametros.get("userNameInputText");
+        String userPass=parametros.get("passwordInputText");
 
         System.out.println("IMPRIMIO");
         System.out.println(userName);
@@ -151,6 +177,16 @@ public class DataBaseBean implements Serializable {
                 return "failure";
         }
 
+    }
+
+    public String logout(){
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        Map<String,String> parametros=facesContext.getExternalContext().getRequestParameterMap();
+        String userName=parametros.get("actualUser");
+
+        onlineUsers.remove(userName);
+
+        return "success";
     }
 
 }

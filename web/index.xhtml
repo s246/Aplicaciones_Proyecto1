@@ -13,14 +13,14 @@
          <table>
             <tr>
                <td>UserName:</td>
-               <td><h:inputText value="#{user.userName}" id="userName"/></td>
+               <td><h:inputText value="#{user.userName}" id="userNameInputText"/></td>
              </tr>
             <tr>
                <td>Password:</td>
-               <td><h:inputSecret value="#{user.password}" id="password"/></td>
+               <td><h:inputSecret value="#{user.password}" id="passwordInputText"/></td>
             </tr>
          </table>
-         <p><h:commandButton value="Login" action="#{dataBase.validateUser}">
+         <p><h:commandButton value="Login" action="#{dataBase.validateUser}" id="BOTON">
          </h:commandButton></p>
 
          <p><h:commandButton value="Register" action="register">

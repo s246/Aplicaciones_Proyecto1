@@ -13,14 +13,15 @@
       <h:form prependId="false">
 
          <h:outputFormat value="#{mess.bienvenida}">
-          <f:param value="#{user.name}"/>
-          <f:param value="#{user.lastName}"/>
+            <f:param value="#{user.name}"/>
+            <f:param value="#{user.lastName}"/>
+            <f:param value="#{user.userName}" id="actualUser"/>
          </h:outputFormat>
          <table>
             <tr>
                <td>Usuarios Desconectados:</td>
                <td>
-                  <h:selectOneListbox value="#{user.userName}">
+                  <h:selectOneListbox disabled="true">
                      <f:selectItems value="#{dataBase.offlineUsers}"/>
                   </h:selectOneListbox>
                </td>
@@ -29,7 +30,7 @@
             <tr>
                <td>Usuarios Conectados:</td>
                <td>
-                  <h:selectOneListbox value="#{user.userName}">
+                  <h:selectOneListbox disabled="true">
                      <f:selectItems value="#{dataBase.onlineUsers}"/>
                   </h:selectOneListbox>
                </td>
@@ -38,15 +39,31 @@
             <tr>
                <td>Mis Mensajes:</td>
                <td>
-                  <h:outputText id="messagesArea" value="#{dataBase.messagesToShow}"/>
+                  <h:selectOneListbox value="#{user.idToEliminate}">
+                     <f:selectItems value="#{dataBase.messagesToShow}"/>
+                  </h:selectOneListbox>
+                  <p><h:commandButton value="Eliminar" action="#{dataBase.eliminateMessage(user)}">
+                  </h:commandButton></p>
+               </td>
+            </tr>
+
+            <tr>
+               <td>Enviar Mensaje:</td>
+               <td>
+                  <h:inputTextarea cols="30" rows="10" value="#{user.message.content}" id="textAreaEnviarmensaje"/>
+                  <h:selectOneListbox value="#{user.message.destinatario}">
+                     <f:selectItems value="#{dataBase.allUsers}"/>
+                  </h:selectOneListbox>
+                  <p><h:commandButton value="Enviar" action="#{dataBase.addMessageTosend(user)}">
+                  </h:commandButton></p>
                </td>
             </tr>
 
          </table>
-         <p><h:commandButton value="Logout">
+         <p><h:commandButton value="Logout" action="#{dataBase.logout}">
          </h:commandButton></p>
 
-         <p><h:commandButton value="Show Messages" action="#{dataBase.obtainMessages}">
+         <p><h:commandButton value="Show Messages" action="#{dataBase.obtainMessages(user)}">
          </h:commandButton></p>
       </h:form>
    </h:body>
