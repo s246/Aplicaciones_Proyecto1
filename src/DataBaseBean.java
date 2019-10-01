@@ -1,14 +1,13 @@
 
 import java.io.Serializable;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Singleton;
+
 
 @Named("dataBase")
 @ApplicationScoped
@@ -31,7 +30,7 @@ public class DataBaseBean implements Serializable {
 
         registeredUsers.put(User_prueba.getUserName(), User_prueba);
         registeredUsers.put(User_prueba2.getUserName(), User_prueba2);
-        total_messages.add(new Message(5,"HOLAAA",User_prueba2.getUserName(), User_prueba.getUserName(),"hoy"));
+        total_messages.add(new Message(5000,"HOLAAA",User_prueba2.getUserName(), User_prueba.getUserName(),"hoy"));
     }
 
     public Map<String, UserBean> getRegisteredUsers() {
@@ -109,20 +108,40 @@ public class DataBaseBean implements Serializable {
     }
 
     public void addMessageTosend(UserBean actualUser){
+        FacesContext facesContext=FacesContext.getCurrentInstance();
         System.out.println("EL DESTINATARIO ES");
         System.out.println(actualUser.getMessage().getDestinatario());
-        total_messages.add(new Message(idCounter,actualUser.getMessage().getContent(),actualUser.getMessage().getDestinatario(),actualUser.getUserName(),"hoy"));
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+
+        if(actualUser.getMessage().getDestinatario()==null){
+            facesContext.addMessage("EnviarButton", new FacesMessage("FALTA SELECCIONAR DESTINATARIO"));
+        }
+
+        else {
+        total_messages.add(new Message(idCounter,actualUser.getMessage().getContent(),actualUser.getMessage().getDestinatario(),actualUser.getUserName(),timeStamp));
         idCounter++;
         System.out.println(total_messages.toString());
+        facesContext.addMessage("EnviarButton", new FacesMessage("Enviado"));
+        actualUser.getMessage().setContent("");
+        }
     }
 
 
     public void eliminateMessage(UserBean actualUser){
+        FacesContext facesContext=FacesContext.getCurrentInstance();
         System.out.println(actualUser.getIdToEliminate());
-        int id=Integer.parseInt(actualUser.getIdToEliminate().substring(actualUser.getIdToEliminate().indexOf(":")+1,actualUser.getIdToEliminate().indexOf("-")));
-        for (Message mensaje : messagesToShow){
-            if(mensaje.getId()==id)
-                total_messages.remove(mensaje);
+        if(actualUser.getIdToEliminate()==null){
+            facesContext.addMessage("EliminarMessage", new FacesMessage("Seleccione Mensaje"));
+        }
+
+        else {
+            int id = Integer.parseInt(actualUser.getIdToEliminate().substring(actualUser.getIdToEliminate().indexOf(":") + 1, actualUser.getIdToEliminate().indexOf("-")));
+            for (Message mensaje : messagesToShow) {
+                if (mensaje.getId() == id)
+                    total_messages.remove(mensaje);
+                    facesContext.addMessage("EliminarMessage", new FacesMessage("Mensaje Eliminado"));
+            }
         }
     }
 
@@ -142,13 +161,16 @@ public class DataBaseBean implements Serializable {
 
         if (existingUser != null) {
             System.out.println("EXISTING");
+            facesContext.addMessage("RegisterButton", new FacesMessage("Usuario YA Existente"));
             return "failure";
         }
         else {
             System.out.println("NO HAY entonces si PUEDE REgistrarse");
             registeredUsers.put(userName, new UserBean(userName, userPass, name, lastName));
+            facesContext.addMessage("RegisterButton", new FacesMessage("REGISTRO EXITOSO LOGEESE"));
+            return "success";
         }
-        return "success";
+
     }
 
     public String validateUser(){
@@ -164,7 +186,9 @@ public class DataBaseBean implements Serializable {
         UserBean user=registeredUsers.get(userName);
 
         if (user==null){
+            facesContext.addMessage("LoginButton", new FacesMessage("USUARIO NO EXISTE"));
             return "failure";
+
         }
 
         else{

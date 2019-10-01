@@ -1,5 +1,6 @@
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.inject.Named;
 // or import javax.faces.bean.ManagedBean;
@@ -10,12 +11,13 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 
 public class UserBean implements Serializable {
-    private String userName = "PRUEBA";
+    private String userName = "";
     private String password;
     private String name = "";
     private String lastName = "";
     private Message message=new Message();
     private String idToEliminate="0";
+    private ArrayList<Message> messagesToShow = new ArrayList<Message>();
 
     public UserBean(){
 
@@ -34,6 +36,14 @@ public class UserBean implements Serializable {
 
     public void setIdToEliminate(String idToEliminate) {
         this.idToEliminate=idToEliminate;
+    }
+
+    public ArrayList<Message> getMessagesToShow() {
+        return messagesToShow;
+    }
+
+    public void setMessagesToShow(ArrayList<Message> messagesToShow) {
+        this.messagesToShow = messagesToShow;
     }
 
     public Message getMessage() {
@@ -75,4 +85,6 @@ public class UserBean implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 }

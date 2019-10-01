@@ -13,18 +13,22 @@
          <table>
             <tr>
                <td>UserName:</td>
-               <td><h:inputText value="#{user.userName}" id="userNameInputText"/></td>
+               <td><h:inputText value="#{user.userName}" id="userNameInputText" required="true"/></td>
              </tr>
             <tr>
                <td>Password:</td>
-               <td><h:inputSecret value="#{user.password}" id="passwordInputText"/></td>
+               <td><h:inputSecret value="#{user.password}" id="passwordInputText" required="true"/></td>
             </tr>
          </table>
-         <p><h:commandButton value="Login" action="#{dataBase.validateUser}" id="BOTON">
+         <p><h:commandButton value="Login" action="#{dataBase.validateUser}" id="LoginButton">
+         </h:commandButton></p>
+         <h:message id="LoginMessage" for="LoginButton" />
+
+         <p><h:commandButton  update="RegisterMessage" value="Register" action="register" id="RegisterButton" immediate="true">
          </h:commandButton></p>
 
-         <p><h:commandButton value="Register" action="register">
-         </h:commandButton></p>
+         <h:message id="RegisterMessage" for="RegisterButton" />
+
       </h:form>
    </h:body>
 </html>

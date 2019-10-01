@@ -8,7 +8,14 @@
         <base-name>mensajes</base-name>
         <var>mess</var>
     </resource-bundle>
-    </application>
+
+
+
+    <locale-config><default-locale>en</default-locale></locale-config>
+    <message-bundle>mensajes</message-bundle>
+
+
+</application>
 
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>

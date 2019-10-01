@@ -42,8 +42,9 @@
                   <h:selectOneListbox value="#{user.idToEliminate}">
                      <f:selectItems value="#{dataBase.messagesToShow}"/>
                   </h:selectOneListbox>
-                  <p><h:commandButton value="Eliminar" action="#{dataBase.eliminateMessage(user)}">
+                  <p><h:commandButton value="Eliminar" action="#{dataBase.eliminateMessage(user)}" id="EliminarButton">
                   </h:commandButton></p>
+                  <h:message id="EliminarMessage" for="EliminarButton" />
                </td>
             </tr>
 
@@ -54,8 +55,9 @@
                   <h:selectOneListbox value="#{user.message.destinatario}">
                      <f:selectItems value="#{dataBase.allUsers}"/>
                   </h:selectOneListbox>
-                  <p><h:commandButton value="Enviar" action="#{dataBase.addMessageTosend(user)}">
+                  <p><h:commandButton value="Enviar" action="#{dataBase.addMessageTosend(user)}" id="EnviarButton">
                   </h:commandButton></p>
+                  <h:message id="MessageSent" for="EnviarButton" />
                </td>
             </tr>
 
@@ -63,7 +65,7 @@
          <p><h:commandButton value="Logout" action="#{dataBase.logout}">
          </h:commandButton></p>
 
-         <p><h:commandButton value="Show Messages" action="#{dataBase.obtainMessages(user)}">
+         <p><h:commandButton value="Update Messages" action="#{dataBase.obtainMessages(user)}" >
          </h:commandButton></p>
       </h:form>
    </h:body>

@@ -13,27 +13,26 @@
          <table>
             <tr>
                <td>Name:</td>
-               <td><h:inputText value="#{user.name}" id="name"/></td>
+               <td><h:inputText value="#{user.name}" id="name" required="true"/></td>
             </tr>
             <tr>
                <td>Lastname:</td>
-               <td><h:inputText value="#{user.lastName}" id="lastName"/></td>
+               <td><h:inputText value="#{user.lastName}" id="lastName" required="true"/></td>
             </tr>
 
             <tr>
                <td>UserName:</td>
-               <td><h:inputText value="#{user.userName}" id="userName"/></td>
+               <td><h:inputText value="#{user.userName}" id="userName" required="true"/></td>
             </tr>
 
              <tr>
                  <td>Password:</td>
-                 <td><h:inputText value="#{user.password}" id="password"/></td>
+                 <td><h:inputText value="#{user.password}" id="password" required="true"/></td>
              </tr>
          </table>
          <p><h:commandButton value="Register" action="#{dataBase.registerUser}">
          </h:commandButton></p>
 
-         <h3><h:outputText id="out" value="out"/></h3>
       </h:form>
    </h:body>
 </html>
